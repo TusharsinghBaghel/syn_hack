@@ -32,6 +32,8 @@ build/
 ### VS Code ###
 .vscode/
 
+.env
+
 ### Frontend (React) ###
 # Dependencies
 frontend/node_modules/
@@ -39,6 +41,7 @@ frontend/.pnp
 frontend/.pnp.js
 
 node_modules/
+.env
 
 # Testing
 frontend/coverage/
