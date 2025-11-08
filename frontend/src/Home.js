@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import QuestionsList from "./components/QuestionsList";
 import PostQuestionModal from "./components/PostQuestionModal";
+import App from "./App"; // Import your existing App.js directly
 import "./Home.css";
 
 const API_BASE = "http://localhost:3000";
@@ -15,6 +16,7 @@ function Home() {
   const [myQuestions, setMyQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [showSimulator, setShowSimulator] = useState(false);
   const [selectedQuestion, setSelectedQuestion] = useState(null);
   const navigate = useNavigate();
 
@@ -73,11 +75,60 @@ function Home() {
     fetchMyQuestions();
   };
 
+  const handleSubmitDesign = async () => {
+    // TODO: Implement API endpoint to submit the architecture design
+    try {
+      console.log("Submit design functionality - to be implemented");
+      
+      // Example of what the API call might look like:
+      // const response = await axios.post(
+      //   `${API_BASE}/architecture/submit`,
+      //   {
+      //     architectureData: simulatorState,
+      //     questionId: selectedQuestion?._id
+      //   },
+      //   {
+      //     headers: { Authorization: `Bearer ${token}` }
+      //   }
+      // );
+      
+      alert("Design submission will be implemented soon!");
+    } catch (err) {
+      console.error("Error submitting design:", err);
+      alert("Failed to submit design. Please try again.");
+    }
+  };
+
+  // If simulator is open, render it fullscreen
+  if (showSimulator) {
+    return (
+      <div className="simulator-fullscreen">
+        <div className="simulator-header">
+          <button 
+            className="btn-close-simulator"
+            onClick={() => setShowSimulator(false)}
+          >
+            ← Back to Questions
+          </button>
+          <button 
+            className="btn-submit-design"
+            onClick={handleSubmitDesign}
+          >
+            Submit Design
+          </button>
+        </div>
+        {/* Your existing App.js component renders here */}
+        <App />
+      </div>
+    );
+  }
+
   return (
     <div className="home-wrapper">
       <Navbar
         onRandomQuestion={handleRandomQuestion}
         onPostQuestion={() => setShowModal(true)}
+        onOpenSimulator={() => setShowSimulator(true)}
       />
       
       <div className="home-layout">

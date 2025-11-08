@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import App from "../App"; // Import the System Design Simulator
 import "./QuestionsDetail.css";
 
 const API_BASE = "http://localhost:3000";
@@ -29,6 +30,40 @@ function QuestionDetail() {
 
     fetchQuestion();
   }, [id, token]);
+
+  const handleSubmitDesign = async () => {
+    // TODO: Implement API endpoint to submit the architecture design
+    try {
+      console.log("Submit design for question:", id);
+      
+      // Example API call structure:
+      // const response = await axios.post(
+      //   `${API_BASE}/architecture/submit`,
+      //   {
+      //     questionId: id,
+      //     architectureData: {
+      //       nodes: [], // Get from App.js state
+      //       edges: [], // Get from App.js state
+      //     }
+      //   },
+      //   {
+      //     headers: { Authorization: `Bearer ${token}` }
+      //   }
+      // );
+      
+      alert("Design submitted successfully! (Feature to be implemented)");
+    } catch (err) {
+      console.error("Error submitting design:", err);
+      alert("Failed to submit design. Please try again.");
+    }
+  };
+
+  const scrollToCanvas = () => {
+    const canvasSection = document.getElementById('design-canvas');
+    if (canvasSection) {
+      canvasSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   if (loading) {
     return (
@@ -60,6 +95,7 @@ function QuestionDetail() {
         ← Back
       </button>
 
+      {/* Question Details Section */}
       <div className="detail-card">
         <div className="detail-header">
           <h1>{question.qtitle}</h1>
@@ -88,6 +124,36 @@ function QuestionDetail() {
         <div className="detail-description">
           <h3>Description</h3>
           <p>{question.qdes}</p>
+        </div>
+
+        <div className="action-prompt">
+          <p>Ready to design your solution?</p>
+          <button 
+            className="btn-scroll-to-canvas"
+            onClick={scrollToCanvas}
+          >
+            Start Designing Below ↓
+          </button>
+        </div>
+      </div>
+
+      {/* Design Canvas Section */}
+      <div className="canvas-section" id="design-canvas">
+        <div className="canvas-header">
+          <div className="canvas-title">
+            <h2>🏗️ Design Your Solution</h2>
+            <p>Create your system architecture by dragging components onto the canvas</p>
+          </div>
+          <button 
+            className="btn-submit-design"
+            onClick={handleSubmitDesign}
+          >
+            Submit Design
+          </button>
+        </div>
+        
+        <div className="simulator-wrapper">
+          <App />
         </div>
       </div>
     </div>
